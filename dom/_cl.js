@@ -1,10 +1,4 @@
-var d = document;
-function cl() {
-    console.log.apply(console, arguments);
-}
-
 ;(function (w) {
-
 
     var cacher = (function () {
         var stack = {};
@@ -115,5 +109,6 @@ function cl() {
 }(window));
 
 
-var el = d.getElementById('el');
-_cl(el).remove();
+var el = document.getElementById('el');
+_cl(el).add('test-class');
+//_cl(el).remove('test-class');
