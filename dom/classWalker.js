@@ -1,3 +1,7 @@
+function cl() {
+    console.log.apply(console, arguments);
+}
+
 ;(function () {
     function classWalker(node) {
         this.list = node.className.trim().length ? node.className.replace(/\s{2,}/, ' ').split(' ') : [];
@@ -59,3 +63,7 @@
     }
 
 }());
+
+
+var re = new RegExp('(^| )'+name+'( |$)');
+cl(~(' some            class '.search('2class')));
