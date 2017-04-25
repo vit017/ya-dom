@@ -30,7 +30,7 @@ function cl() {
 
     var walker = function (node) {
         if (!(this instanceof walker)) {
-            throw new Error('wrong global object');
+            throw new TypeError('wrong global object');
         }
         this.node = node;
         this.node.className = this.node.className.trim();
@@ -113,3 +113,7 @@ function cl() {
     w._cl = _cl;
 
 }(window));
+
+
+var el = d.getElementById('el');
+_cl(el).remove();
