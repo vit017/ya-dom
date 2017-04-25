@@ -1,17 +1,17 @@
 ;(function (w) {
 
     var cacher = (function () {
-        var stack = {};
+        var queries = {};
 
         var has = function (request) {
-            return stack.hasOwnProperty(request);
+            return queries.hasOwnProperty(request);
         };
         var get = function (request) {
-            return stack.hasOwnProperty(request) ? stack[request] : null;
+            return queries.hasOwnProperty(request) ? queries[request] : null;
         };
 
         var set = function (request, response) {
-            stack[request] = response;
+            queries[request] = response;
         };
 
         return {
@@ -73,6 +73,11 @@
             return this;
         },
         closest: function (name) {
+            var method = 'closest';
+            if (cacher.has(method + name)) {
+                return cacher.get(method + name);
+            }
+
             var find = null,
                 oldNode = this.node;
 
@@ -85,13 +90,30 @@
                 this.node = this.node.parentNode;
             }
 
+            cacher.set(method + name, find);
             return find;
         },
         find: function (name) {
-            return this.node.getElementsByClassName(name)[0];
+            var method = 'find';
+            if (cacher.has(method + name)) {
+                return cacher.get(method + name);
+            }
+
+            var node = this.node.getElementsByClassName(name)[0];
+            cacher.set(method + name, node);
+
+            return node;
         },
         findAll: function (name) {
-            return this.node.getElementsByClassName(name);
+            var method = 'findAll';
+            if (cacher.has(method + name)) {
+                return cacher.get(method + name);
+            }
+
+            var nodes = this.node.getElementsByClassName(name);
+            cacher.set(method + name, nodes);
+
+            return nodes;
         }
 
     };
